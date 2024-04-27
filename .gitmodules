@@ -1,0 +1,3 @@
+[submodule "Rank-N-Contrast"]
+	path = Rank-N-Contrast
+	url = https://github.com/kaiwenzha/Rank-N-Contrast.git
