@@ -4,7 +4,6 @@ import sys
 import logging
 import torch
 import time
-from dataset import *
 from utils import *
 from model import Encoder, RepresentationEncoder
 from loss import RnCLoss
@@ -29,8 +28,8 @@ def parse_option():
     parser.add_argument('--trial', type=str, default='0', help='id for recording multiple runs')
 
     parser.add_argument('--data_folder', type=str, default='./data', help='path to custom dataset')
-    parser.add_argument('--dataset', type=str, default='AgeDB', choices=['AgeDB'], help='dataset')
-    parser.add_argument('--model', type=str, default='resnet18', choices=['resnet18', 'resnet50'])
+    parser.add_argument('--dataset', type=str, default='', help='dataset')
+    parser.add_argument('--model', type=str, default='RepEnc', choices=['RepEnc'])
     parser.add_argument('--resume', type=str, default='', help='resume ckpt path')
     parser.add_argument('--aug', type=str, default='crop,flip,color,grayscale', help='augmentations')
 
@@ -83,11 +82,11 @@ def set_loader(opt):
     print(f'Train set size: {train_dataset.__len__()}')
     '''
 
-    train_dataset = torch.load("./data/train_ds.pt")
+    train_dataset = torch.load("./data/datasets/{}_train.pt".format(opt.dataset))
     print(type(train_dataset))
 
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=opt.batch_size, shuffle=True, drop_last=True)
+        train_dataset, batch_size=opt.batch_size, drop_last=True, sampler=torch.utils.data.RandomSampler(train_dataset, num_samples=len(train_dataset) // 10))
 
     return train_loader
 
