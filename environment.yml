@@ -160,4 +160,8 @@ dependencies:
   - yaml=0.2.5=h7b6447c_0
   - zlib=1.2.13=h5eee18b_0
   - zstd=1.5.5=hc292b87_0
+  - pip:
+      - py4j==0.10.9.7
+      - pyspark==3.5.1
+      - smogn==0.1.2
 prefix: /var/home/zaristei/.conda/envs/mlb_project
